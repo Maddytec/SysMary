@@ -77,8 +77,8 @@ public class PesquisaPedidosBean implements Serializable {
 		}
 	}
 
-	public StatusPedido[] getStatuses() {
-		return StatusPedido.values();
+	public StatusPedido[] getStatus() {
+		return null;
 	}
 
 	public PedidoFilter getFiltro() {

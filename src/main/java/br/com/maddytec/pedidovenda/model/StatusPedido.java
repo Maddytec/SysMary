@@ -1,19 +1,19 @@
 package br.com.maddytec.pedidovenda.model;
 
-public enum StatusPedido {
+public enum StatusPedido{
 	
 	ORCAMENTO("Orçamento"),
 	EMITIDO("Emitido"),
 	CANCELADO("Cancelado"),
 	BAIXADO("Baixado");
 	
-	private String descricao;
+	private String nome;
 	
-	StatusPedido(String descricao) {
-	this.descricao = descricao;
+	StatusPedido(String nome) {
+	this.nome = nome;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return nome;
 	}
 }

@@ -74,9 +74,122 @@
 				<p:outputLabel value="Estoque" for="estoque" />
 				<p:inputText id="estoque" size="10" maxlength="4"
 					value="#{cadastroProdutoBean.produto.quantidadeEstoque}" required="true" />
+					
+					<p:outputLabel value="Tipo de Produto" for="tipoProduto" />
+		<p:selectOneMenu id="tipoProduto"
+			value="#{cadastroProdutoBean.produto.tipoProduto}">
+			<f:selectItem itemLabel="Selecione" />
+			<f:selectItems value="#{cadastroProdutoBean.tipoProduto}"
+				var="tipoProduto" itemValue="#{tipoProduto}"
+				itemLabel="#{tipoProduto.descricao}" />
+		</p:selectOneMenu>
+		
+		
+			
 			</p:panelGrid>
+			
+			          <script type="text/javascript">
+    function handleDrop(event, ui) {
+        var removeAtributo = ui.draggable;
+ 
+        removeAtributo.fadeOut('fast');
+    }
+</script>
+            
+			
+			<h:form id="atributoForm">
+			
+			<p:fieldset id="availableCarsField" legend="Atributos">
+				<p:dataTable id="availableCars" var="atributo" value="#{cadastroProdutoBean.listAtributos}">
+					 <p:column style="width:20px">
+                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+            </p:column>
+            
+  
+            
+             <p:column style="text-align:left" headerText="Descrição">
+                <h:outputText value="#{atributo.nome}" />
+            </p:column>
+				</p:dataTable>
+			</p:fieldset>
+			
+			
+			
+			<p:fieldset id="selecioneAtributo" legend="Atributos selecionados" style="margin-top:20px">
+        <p:outputPanel id="dropArea">
+            <h:outputText value="Arraste para aqui!!!"  style="font-size:24px;" />
+            <p:dataTable id="selectedCarsTable" var="atributo" value="#{cadastroProdutoBean.listAtributosSelecionado}" rendered="#{not empty cadastroProdutoBean.listAtributosSelecionado}">
+                <p:column headerText="Atributo">
+                    <h:outputText value="#{atributo.nome}" />
+                </p:column>
+ 
+                   <p:column style="width:32px">
+                    <p:commandButton update=":atributoForm:display" oncomplete="PF('atributoDialog').show()" icon="ui-icon-search">
+                        <f:setPropertyActionListener value="#{atributo}" target="#{cadastroProdutoBean.atributoSelecionado}" />
+                    </p:commandButton>
+                </p:column>     
+            </p:dataTable>
+        </p:outputPanel>
+    </p:fieldset>
+			
+			<p:droppable for="selecioneAtributo" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableCars" onDrop="handleDrop">
+        <p:ajax listener="#{cadastroProdutoBean.onAtributoRemove}" update="dropArea availableCars" />
+    </p:droppable>
+ 
+    <p:dialog header="Atributo Detalhado" widgetVar="atributoDialog" resizable="false" draggable="false"
+                showEffect="fade" hideEffect="fade" modal="true">
+ 
+        <p:outputPanel id="display">
+            <h:panelGrid columns="2" cellpadding="4" rendered="#{not empty cadastroProdutoBean.atributoSelecionado}">
+                <f:facet name="header">
+                    
+                </f:facet>
+ 
+                <h:outputText value="Atributo:" />
+                <h:outputText value="#{cadastroProdutoBean.atributoSelecionado.nome}" style="font-weight:bold"/>
+ 
+            </h:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+			
+				
+			</h:form>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<p:tabView style="margin-top: 20px">
+				<p:tab title="Itens">
+					<ui:include src="/WEB-INF/template/pedidos/ItensPedido.xhtml" />
+				</p:tab>
+				<p:tab title="Dados de entrega">
+					<ui:include
+						src="/WEB-INF/template/pedidos/DadosEntregaPedido.xhtml" />
+				</p:tab>
+				<p:tab title="Observação">
+					<ui:include src="/WEB-INF/template/pedidos/ObservacaoPedido.xhtml" />
+				</p:tab>
+			</p:tabView>
+			
+			
+				
+			
 		</h:form>
+		
+		
+		
 	</ui:define>
-
-
 </ui:composition>

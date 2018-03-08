@@ -38,7 +38,6 @@ public class Endereco implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	
 	@Size(max = 150)
 	@Column(nullable = true, length = 150)
@@ -50,7 +49,6 @@ public class Endereco implements Serializable {
 		this.logradouro = logradouro;
 	}
 
-	
 	@Size(max = 20)
 	@Column(nullable = true, length = 20)
 	public String getNumero() {
@@ -82,7 +80,6 @@ public class Endereco implements Serializable {
 		this.complemento = complemento;
 	}
 
-	
 	@Size(max = 60)
 	@Column(nullable = true, length = 60)
 	public String getCidade() {
@@ -92,7 +89,6 @@ public class Endereco implements Serializable {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-
 	
 	@Size(max = 60)
 	@Column(nullable = true, length = 60)

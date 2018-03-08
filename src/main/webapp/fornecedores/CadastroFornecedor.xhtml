@@ -10,22 +10,25 @@
 	<ui:define name="corpo">
 
 		<f:metadata>
-			<o:viewParam name="fornecedor" value="#{cadastroFornecedorBean.fornecedor}" />
+			<o:viewParam name="fornecedor"
+				value="#{cadastroFornecedorBean.fornecedor}" />
 			<f:viewAction action="#{cadastroFornecedorBean.inicializar}" />
 		</f:metadata>
 
 		<h:form id="frm">
 			<p:focus context="frm" />
-			<h1>#{cadastroFornecedorBean.editando ? 'Edição de fornecedor' : 'Novo
-				fornecedor'}</h1>
+			<h1>#{cadastroFornecedorBean.editando ? 'Edição de fornecedor' :
+				'Novo fornecedor'}</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
-			<ui:include src="/WEB-INF/template/fornecedores/BotoesFornecedor.xhtml" />
+			<ui:include
+				src="/WEB-INF/template/fornecedores/BotoesFornecedor.xhtml" />
 
 			<ui:include src="/WEB-INF/template/fornecedores/CapaFornecedor.xhtml" />
 
-			<ui:include src="/WEB-INF/template/fornecedores/EnderecoFornecedor.xhtml" />
+			<ui:include
+				src="/WEB-INF/template/fornecedores/EnderecoFornecedor.xhtml" />
 
 		</h:form>
 

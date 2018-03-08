@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +34,8 @@ public class Produto implements Serializable {
 	private BigDecimal valorUnitario;
 	private Integer quantidadeEstoque;
 	private Categoria categoria;
+	private TipoProduto tipoProduto;
+	private Atributo atributo;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,7 +58,6 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
-	
 	@Column(nullable = true, length = 20, unique = true)
 	public String getSku() {
 		return sku;
@@ -97,6 +100,17 @@ public class Produto implements Serializable {
 		this.categoria = categoria;
 	}
 
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo_produto", nullable = false, length = 20)
+	public TipoProduto getTipoProduto() {
+		return tipoProduto;
+	}
+
+	public void setTipoProduto(TipoProduto tipoProduto) {
+		this.tipoProduto = tipoProduto;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,8 +140,8 @@ public class Produto implements Serializable {
 		int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
 
 		if (novaQuantidade < 0) {
-			throw new NegocioException("Não há disponibilidade no estoque de "
-					+ quantidade + " itens do produto " + this.getSku() + ".");
+			throw new NegocioException(
+					"Não há disponibilidade no estoque de " + quantidade + " itens do produto " + this.getSku() + ".");
 		}
 
 		this.setQuantidadeEstoque(novaQuantidade);
@@ -137,4 +151,14 @@ public class Produto implements Serializable {
 		this.setQuantidadeEstoque(getQuantidadeEstoque() + quantidade);
 	}
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "atributo_id", nullable = false)
+	public Atributo getAtributo() {
+		return atributo;
+	}
+
+	public void setAtributo(Atributo atributo) {
+		this.atributo = atributo;
+	}
 }

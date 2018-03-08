@@ -21,6 +21,8 @@ public class CadastroEnderecoBean implements Serializable {
 	private Endereco endereco;
 	private Endereco enderecoAEditar;
 	private Endereco enderecoAExcluir;
+	
+	private CepServiceBean cepServiceBean;
 
 	@Inject
 	@FornecedorEdicao
@@ -35,8 +37,10 @@ public class CadastroEnderecoBean implements Serializable {
 	@Inject
 	private Event<FornecedorAlteradoEvent> fornecedorAlteradoEvent;
 
+	
+	
 	public void adicionar() {
-		 if (endereco != null) {
+		 if (endereco != null && !isEnderecoEmpty(endereco)) {
 		 this.fornecedor.getEnderecos().add(endereco);
 		 this.endereco.setFornecedor(fornecedor);
 		
@@ -72,6 +76,52 @@ public class CadastroEnderecoBean implements Serializable {
 		}
 	}
 
+	
+	public void pesquisarCep() {
+		this.cepServiceBean = new CepServiceBean();
+		endereco = cepServiceBean.encontraCep(endereco.getCep());
+	}
+	
+	public boolean isEnderecoEmpty(Endereco endereco) {
+		boolean b = false;
+		
+		if( endereco.getLogradouro().equals(""))
+		{
+			FacesUtil.addErrorMessage("Campo logradouro não preenchido");
+			b = true;
+		}
+			
+		if( endereco.getNumero().equals(""))
+		{
+			FacesUtil.addErrorMessage("Campo número não preenchido");
+			b = true;
+		}
+		
+		if( endereco.getBairro().equals(""))
+		{
+			FacesUtil.addErrorMessage("Campo bairro não preenchido");
+			b = true;
+		}
+			
+		if(endereco.getCidade().equals(""))
+		{
+			FacesUtil.addErrorMessage("Campo cidade não preenchido");
+			b = true;
+		}
+		
+		if(endereco.getUf().equals(""))
+		{
+			FacesUtil.addErrorMessage("Campo Uf não preenchido");
+			b = true;
+		}
+		
+		if(b == true) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -108,4 +158,15 @@ public class CadastroEnderecoBean implements Serializable {
 		this.enderecoAExcluir = enderecoAExcluir;
 	}
 
+
+	public CepServiceBean getCepServiceBean() {
+		return cepServiceBean;
+	}
+
+
+	public void setCepServiceBean(CepServiceBean cepServiceBean) {
+		this.cepServiceBean = cepServiceBean;
+	}
+	
+	
 }
